@@ -14,7 +14,6 @@ class _TodoListPageState extends State<TodoListPage> {
   final TodoService _todoService = TodoService();
   final TextEditingController _controller = TextEditingController();
 
-  // Define your custom colors
   final Color primaryColor = Colors.teal;
   final Color accentColor = Colors.pink;
 
