@@ -40,7 +40,7 @@ class _TodoListPageState extends State<TodoListPage> {
                   },
                 ),
                 trailing: IconButton(
-                  icon: Icon(Icons.delete),
+                  icon: const Icon(Icons.delete),
                   onPressed: () {
                     _todoService.deleteTodo(index);
                   },
@@ -60,14 +60,15 @@ class _TodoListPageState extends State<TodoListPage> {
                 title: Text('Add Todo', style: TextStyle(color: primaryColor)),
                 content: TextField(
                   controller: _controller,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     hintText: 'Enter your todo...',
                   ),
                 ),
                 actions: [
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(primary: accentColor),
-                    child: Text('Add', style: TextStyle(color: Colors.white)),
+                    child: const Text('Add',
+                        style: TextStyle(color: Colors.white)),
                     onPressed: () {
                       if (_controller.text.isNotEmpty) {
                         var todo = TodoItem(_controller.text, false);
@@ -82,7 +83,7 @@ class _TodoListPageState extends State<TodoListPage> {
             },
           );
         },
-        child: Icon(Icons.add),
+        child: const Icon(Icons.add),
       ),
     );
   }
