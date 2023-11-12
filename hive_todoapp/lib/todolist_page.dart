@@ -4,7 +4,7 @@ import 'package:hive_todoapp/todo_item.dart';
 import 'package:hive_todoapp/todo_service.dart';
 
 class TodoListPage extends StatefulWidget {
-  const TodoListPage({super.key});
+  const TodoListPage({Key? key}) : super(key: key);
 
   @override
   State<TodoListPage> createState() => _TodoListPageState();
@@ -14,12 +14,16 @@ class _TodoListPageState extends State<TodoListPage> {
   final TodoService _todoService = TodoService();
   final TextEditingController _controller = TextEditingController();
 
+  // Define your custom colors
+  final Color primaryColor = Colors.teal;
+  final Color accentColor = Colors.pink;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Hive TODO List"),
-        backgroundColor: Colors.black,
+        title: const Text("My Task Lists"),
+        backgroundColor: primaryColor,
       ),
       body: ValueListenableBuilder(
         valueListenable: Hive.box<TodoItem>('todoBox').listenable(),
@@ -48,31 +52,36 @@ class _TodoListPageState extends State<TodoListPage> {
         },
       ),
       floatingActionButton: FloatingActionButton(
-        backgroundColor: Colors.green,
+        backgroundColor: primaryColor,
         onPressed: () async {
           showDialog(
-              context: context,
-              builder: (context) {
-                return AlertDialog(
-                  title: Text('Add Todo'),
-                  content: TextField(
-                    controller: _controller,
+            context: context,
+            builder: (context) {
+              return AlertDialog(
+                title: Text('Add Todo', style: TextStyle(color: primaryColor)),
+                content: TextField(
+                  controller: _controller,
+                  decoration: InputDecoration(
+                    hintText: 'Enter your todo...',
                   ),
-                  actions: [
-                    ElevatedButton(
-                      child: Text('Add'),
-                      onPressed: () {
-                        if (_controller.text.isNotEmpty) {
-                          var todo = TodoItem(_controller.text, false);
-                          _todoService.addTodo(todo);
-                          _controller.clear();
-                          Navigator.pop(context);
-                        }
-                      },
-                    )
-                  ],
-                );
-              });
+                ),
+                actions: [
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(primary: accentColor),
+                    child: Text('Add', style: TextStyle(color: Colors.white)),
+                    onPressed: () {
+                      if (_controller.text.isNotEmpty) {
+                        var todo = TodoItem(_controller.text, false);
+                        _todoService.addTodo(todo);
+                        _controller.clear();
+                        Navigator.pop(context);
+                      }
+                    },
+                  )
+                ],
+              );
+            },
+          );
         },
         child: Icon(Icons.add),
       ),
